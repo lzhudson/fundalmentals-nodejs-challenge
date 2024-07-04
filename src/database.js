@@ -52,7 +52,9 @@ export class Database {
       this.#database[table][rowIndex] = { 
         ...this.#database[table][rowIndex], 
         title: data.title ? data.title : this.#database[table][rowIndex].title,
-        description: data.description ? data.description : this.#database[table][rowIndex].description
+        description: data.description ? data.description : this.#database[table][rowIndex].description,
+        updated_at: new Date(),
+        completed_at: data.completed_at ? data.completed_at : this.#database[table][rowIndex].completed_at,
       }
       this.#persist();
     }
