@@ -19,6 +19,14 @@ export const routes = [
     handler: (req, res) => {
       const { title, description } = req.body;
 
+      if(!title) {
+        return res.writeHead(400).end(JSON.stringify({ message: 'Title is required' }));
+      }
+
+      if(!description) {
+        return res.writeHead(400).end(JSON.stringify({ message: 'Description is required' }));
+      }
+
       const task = {
         id: randomUUID(),
         title,
@@ -53,6 +61,12 @@ export const routes = [
     path: buildRoutePath('/tasks/:id/complete/'),
     handler: (req, res) => {
       const { id } = req.params;
+
+      const { title, description } = req.body;
+
+      if(!title || !description) {
+        return res.writeHead(400).end(JSON.stringify({ message: 'Title or description is required' }));
+      }
 
       database.update('tasks', id, {
         completed_at: new Date()
