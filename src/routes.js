@@ -46,6 +46,12 @@ export const routes = [
     path: buildRoutePath('/tasks/:id'),
     handler: (req, res) => {
       const { id } = req.params;
+      const task = database.findById('tasks', id);
+  
+      if(!task) {
+        return res.writeHead(400).end(JSON.stringify({ message: 'Task not found.' }));
+      }
+
       const { title, description } = req.body;
       
       database.update('tasks', id, {
@@ -61,6 +67,12 @@ export const routes = [
     path: buildRoutePath('/tasks/:id/complete/'),
     handler: (req, res) => {
       const { id } = req.params;
+
+      const task = database.findById('tasks', id);
+
+      if(!task) {
+        return res.writeHead(400).end(JSON.stringify({ message: 'Task not found.' }));
+      }
 
       const { title, description } = req.body;
 
