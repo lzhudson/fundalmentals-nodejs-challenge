@@ -19,10 +19,13 @@ export class Database {
   #persist() {
     fs.writeFile(databasePath, JSON.stringify(this.#database))
   }
+  findById(table, id) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id);
 
+    return this.#database[table][rowIndex];
+  }
   select(table, search) {
     let data = this.#database[table] ?? []
-
     if(search) {
       data = data.filter(row => {
         return Object.entries(search).some(([key, value]) => {
